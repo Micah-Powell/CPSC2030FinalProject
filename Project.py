@@ -16,6 +16,10 @@ class Customer:
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
 
+    def canceltik(self, ticket):
+        del ticket
+        
+
 class Ticket:
     def __init__(self, movie, room, seat, price):
         self.movie = movie.title
