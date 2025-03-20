@@ -8,6 +8,7 @@ class Customer:
     def __init__(self, name, email):
         self.name = name
         self.email = email
+        A.customers[name] = email
 
     def buytik(self, movie, room, seat, payment):
         if movie.price > payment:
@@ -49,11 +50,17 @@ class Theater:
 class Seat:
     def __init__(self, number):
         self.number = number
-        
 
+class AllCustomers:
+    def __init__(self):
+        self.customers = {}
+        
+A = AllCustomers()
 T = Theater()
 M1 = Movie("Star Wars", 10, 1)
 John = Customer("John", "John@gmail.com")
+Jerry = Customer("Jerry", "Jerry@gmail.com")
+print (A.customers)
 John.buytik(M1, 1, 1, 10)
 print (T.rooms["room1"].seats)
 print (John.ticket.__dict__)
