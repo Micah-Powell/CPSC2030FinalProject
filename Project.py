@@ -16,14 +16,15 @@ class Customer:
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
 
-    def canceltik(self, ticket):
-        del ticket
-        
+    def canceltik(self):
+        del self.ticket
+
 
 class Ticket:
     def __init__(self, movie, room, seat, price):
         self.movie = movie.title
-        self.seat = room.seats[f"seat{str(seat)}"].number
+        room = "room"+ str(room)
+        self.seat = T.rooms[room].seats[f"seat{str(seat)}"].number
         self.price = price
         self.desc = f"{self.movie},{self.seat},{self.price}"
         
@@ -31,7 +32,7 @@ class Movie:
     def __init__(self, title, price, room):
         self.title = title
         self.price = price
-        self.room = room
+        self.room = T.rooms[("room" + str(room))]
 
 class Room:
     def __init__(self, number):
@@ -46,3 +47,11 @@ class Seat:
     def __init__(self, number):
         self.number = number
         
+
+T = Theater()
+M1 = Movie("Star Wars", 10, 1)
+John = Customer("John", "John@gmail.com")
+John.buytik(M1, 1, 12, 10)
+print (John.ticket.__dict__)
+John.canceltik()
+print (John.__dict__)
