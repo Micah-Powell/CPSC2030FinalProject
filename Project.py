@@ -16,11 +16,10 @@ class Customer:
             exit(1)
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
-        del T.rooms["room"+str(room)].seats[f"seat{str(seat)}"]
+        T.rooms["room"+str(room)].seats[f"seat{str(seat)}"].taken = True
 
     def canceltik(self):
-        self.ticket.seat
-        T.rooms[self.ticket.room].seats[f"seat{self.ticket.seat}"] = Seat(self.ticket.seat)
+        T.rooms[self.ticket.room].seats[f"seat{self.ticket.seat}"].taken = False
         del self.ticket
 
 
@@ -50,6 +49,7 @@ class Theater:
 class Seat:
     def __init__(self, number):
         self.number = number
+        self.taken = False
 
 class AllCustomers:
     def __init__(self):
@@ -63,6 +63,8 @@ Jerry = Customer("Jerry", "Jerry@gmail.com")
 print (A.customers)
 John.buytik(M1, 1, 1, 10)
 print (T.rooms["room1"].seats)
+for i in T.rooms["room1"].seats.values():
+    print (i.taken)
 print (John.ticket.__dict__)
 John.canceltik()
 print (T.rooms["room1"].seats)
