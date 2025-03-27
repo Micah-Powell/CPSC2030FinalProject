@@ -1,13 +1,22 @@
 ''' 
 this is the start of my final project.
-The code will act as the ticket purchasing
+The code will create the Managing
 system for a movie theater
 '''
 
-class Customer:
+class Person:
     def __init__(self, name, email):
         self.name = name
         self.email = email
+
+class Employee(Person):
+    def __init__(self, name, email, position):
+        super().__init__(name, email)
+        A.employees[name] = position
+        
+class Customer(Person):
+    def __init__(self, name, email):
+        super().__init__(name, email)
         A.customers[name] = email
 
     def buytik(self, movie, room, seat, payment):
@@ -51,16 +60,19 @@ class Seat:
         self.number = number
         self.taken = False
 
-class AllCustomers:
+class AllPeople:
     def __init__(self):
         self.customers = {}
+        self.employees = {}
         
-A = AllCustomers()
+A = AllPeople()
 T = Theater()
 M1 = Movie("Star Wars", 10, 1)
 John = Customer("John", "John@gmail.com")
 Jerry = Customer("Jerry", "Jerry@gmail.com")
+Tim = Employee("Tim", "Tim@gmail.com", "Manager")
 print (A.customers)
+print (A.employees)
 John.buytik(M1, 1, 1, 10)
 print (T.rooms["room1"].seats)
 for i in T.rooms["room1"].seats.values():
