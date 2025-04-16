@@ -1,17 +1,20 @@
+from abc import ABC, abstractmethod
 ''' 
 this is the start of my final project.
-The code will create the Managing
+The code will create the managing
 system for a movie theater
 '''
 
-class Person:
+class Person(ABC):
     def __init__(self, name, email):
         self.name = name
         self.email = email
 
+
 class Employee(Person):
     def __init__(self, name, email, position):
         super().__init__(name, email)
+        self.position = position
         A.employees[name] = position
         
 class Customer(Person):
@@ -22,6 +25,9 @@ class Customer(Person):
     def buytik(self, movie, room, seat, payment):
         if movie.price > payment:
             print ("Not sufficient funds")
+            exit(1)
+        elif T.rooms["room"+str(room)].seats[f"seat{str(seat)}"].taken == True:
+            print ("Seat is already reserved")
             exit(1)
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
@@ -43,7 +49,7 @@ class Ticket:
 class Movie:
     def __init__(self, title, price, room):
         self.title = title
-        self.price = price
+        self.__price = price
         self.room = T.rooms[("room" + str(room))]
 
 class Room:
@@ -57,13 +63,27 @@ class Theater:
 
 class Seat:
     def __init__(self, number):
-        self.number = number
-        self.taken = False
+        self.__number = number
+        self.__taken = False
+
+    @property
+    def number(self):
+        return self.__number
+
+    @property
+    def taken(self):
+        return self.__taken
+    
+    @taken.setter
+    def taken(self, taken):
+        if type(taken) == bool:
+            self.__taken = taken
 
 class AllPeople:
     def __init__(self):
         self.customers = {}
         self.employees = {}
+
         
 A = AllPeople()
 T = Theater()
