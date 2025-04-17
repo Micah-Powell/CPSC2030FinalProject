@@ -25,7 +25,7 @@ class Customer(Person):
         if movie.price > payment:
             print ("Not sufficient funds")
             exit(1)
-        elif T.rooms["room"+str(room)].seats[f"seat{str(seat)}"].taken == True:
+        elif T.rooms["room"+str(room)].findseat(seat).taken == True:
             print ("Seat is already reserved")
             exit(1)
         else:
@@ -42,7 +42,9 @@ class Ticket:
         self.room = "room"+ str(room)
         self.seat = T.rooms[self.room].seats[f"seat{str(seat)}"].number
         self.price = price
-        self.desc = f"{self.movie},{self.seat},{self.price}"
+    
+    def __repr__(self):
+        return (f"{self.movie},{self.seat},{self.price}")
         
 class Movie:
     def __init__(self, title, price, room):
@@ -93,6 +95,9 @@ class Seat:
         self.__number = number
         self.__taken = False
 
+    def __repr__(self):
+        return (f"seat {self.number} is taken -->{self.taken}")
+
     def buy(self):
         self.taken = True
 
@@ -130,7 +135,7 @@ John.buytik(M1, 1, 1, 10)
 print (T.rooms["room1"].seats)
 for i in T.rooms["room1"].seats.values():
     print (i.taken)
-print (John.ticket.__dict__)
+print (John.ticket)
 John.canceltik()
 print (T.rooms["room1"].seats)
 print (John.__dict__)
