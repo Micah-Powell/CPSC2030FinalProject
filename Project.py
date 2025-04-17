@@ -10,7 +10,6 @@ class Person(ABC):
         self.name = name
         self.email = email
 
-
 class Employee(Person):
     def __init__(self, name, email, position):
         super().__init__(name, email)
@@ -31,12 +30,11 @@ class Customer(Person):
             exit(1)
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
-        T.rooms["room"+str(room)].seats[f"seat{str(seat)}"].taken = True
+        T.rooms["room"+str(room)].findseat(seat).buy()
 
     def canceltik(self):
-        T.rooms[self.ticket.room].seats[f"seat{self.ticket.seat}"].taken = False
+        T.rooms[self.ticket.room].findseat(self.ticket.seat).cancel()
         del self.ticket
-
 
 class Ticket:
     def __init__(self, movie, room, seat, price):
@@ -48,23 +46,58 @@ class Ticket:
         
 class Movie:
     def __init__(self, title, price, room):
-        self.title = title
+        self.__title = title
         self.__price = price
-        self.room = T.rooms[("room" + str(room))]
+        self.__room = T.rooms[("room" + str(room))]
+
+    @property
+    def title(self):
+        return self.__title
+    
+    @property
+    def price(self):
+        return self.__price
+    
+    @property
+    def room(self):
+        return self.__room
 
 class Room:
     def __init__(self, number):
-        self.location = number
-        self.seats = {"seat"+str(i): Seat(i) for i in range(1,31)}
+        self.__location = number
+        self.__seats = {"seat"+str(i): Seat(i) for i in range(1,31)}
 
+    def findseat(self, seatnumber):
+        for i in self.seats:
+            if "seat"+str(seatnumber) == i:
+                return self.seats[i]
+    
+    @property
+    def location(self):
+        return self.__location
+
+    @property
+    def seats(self):
+        return self.__seats
+    
 class Theater:
     def __init__(self):
-        self.rooms = {"room"+str(i): Room(i) for i in range(1,11)}
+        self.__rooms = {"room"+str(i): Room(i) for i in range(1,11)}
+
+    @property
+    def rooms(self):
+        return self.__rooms
 
 class Seat:
     def __init__(self, number):
         self.__number = number
         self.__taken = False
+
+    def buy(self):
+        self.taken = True
+
+    def cancel(self):
+        self.taken = False
 
     @property
     def number(self):
