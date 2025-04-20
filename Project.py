@@ -21,12 +21,25 @@ class Customer(Person):
         super().__init__(name, email)
         A.customers[name] = email
 
+class Food(ABC):
+    def __init__(self, name, price):
+        self.__name = name
+        self.__price = price
+
+class Popcorn(Food):
+    def __init__(self, name, price):
+        super().__init__(name, price)
+
+class Hotdog(Food):
+    def __init__(self, name, price):
+        super().__init__(name, price)
+
     def buytik(self, movie, room, seat, payment):
         #checks if the payment is sufficient and then creates a ticket based on the information provided and reserves the seat by changing its taken value to True
         if movie.price > payment:
             print ("Not sufficient funds")
             exit(1)
-        elif T.find_room(room).findseat(seat).taken == True:
+        if T.find_room(room).findseat(seat).taken == True:
             print ("Seat is already reserved")
             exit(1)
         else:
@@ -37,7 +50,7 @@ class Customer(Person):
         #deletes the ticket from the users attributes and returns the seats taken value to False
         T.find_room(self.ticket.room).findseat(self.ticket.seat).cancel()
         del self.ticket
-        
+
 class AllPeople:
     def __init__(self):
         self.customers = {}
@@ -157,16 +170,16 @@ class Seat:
 A = AllPeople()
 T = Theater()
 M1 = Movie("Star Wars", 10, 1)
-John = Customer("John", "John@gmail.com")
-Jerry = Customer("Jerry", "Jerry@gmail.com")
-Tim = Employee("Tim", "Tim@gmail.com", "Manager")
-print (A.customers)
-print (A.employees)
-John.buytik(M1, 1, 1, 10)
-print (T.rooms["room1"].seats)
-for i in T.rooms["room1"].seats.values():
-    print (i.taken)
-print (John.ticket)
-John.canceltik()
-print (T.rooms["room1"].seats)
-print (John.__dict__)
+# John = Customer("John", "John@gmail.com")
+# Jerry = Customer("Jerry", "Jerry@gmail.com")
+# Tim = Employee("Tim", "Tim@gmail.com", "Manager")
+# print (A.customers)
+# print (A.employees)
+# John.buytik(M1, 1, 1, 10)
+# print (T.rooms["room1"].seats)
+# for i in T.rooms["room1"].seats.values():
+#     print (i.taken)
+# print (John.ticket)
+# John.canceltik()
+# print (T.rooms["room1"].seats)
+# print (John.__dict__)
