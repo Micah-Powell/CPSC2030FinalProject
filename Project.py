@@ -25,26 +25,42 @@ class Customer(Person):
         if movie.price > payment:
             print ("Not sufficient funds")
             exit(1)
-        elif T.rooms["room"+str(room)].findseat(seat).taken == True:
+        elif T.find_room(room).findseat(seat).taken == True:
             print ("Seat is already reserved")
             exit(1)
         else:
             self.ticket = Ticket(movie, room, seat, movie.price)
-        T.rooms["room"+str(room)].findseat(seat).buy()
+        T.find_room(room).findseat(seat).buy()
 
     def canceltik(self):
-        T.rooms[self.ticket.room].findseat(self.ticket.seat).cancel()
+        T.find_room(self.ticket.room).findseat(self.ticket.seat).cancel()
         del self.ticket
 
 class Ticket:
     def __init__(self, movie, room, seat, price):
-        self.movie = movie.title
-        self.room = "room"+ str(room)
-        self.seat = T.rooms[self.room].seats[f"seat{str(seat)}"].number
-        self.price = price
+        self.__movie = movie.title
+        self.__room = room
+        self.__seat = T.find_room(room).findseat(seat).number
+        self.__price = price
+    
+    @property
+    def movie(self):
+        return self.__movie
+   
+    @property
+    def room(self):
+        return self.__room
+    
+    @property
+    def seat(self):
+        return self.__seat
+    
+    @property
+    def price(self):
+        return self.__price
     
     def __repr__(self):
-        return (f"{self.movie},{self.seat},{self.price}")
+        return (f"Movie:{self.movie}, Seat Number:{self.seat}, Ticket Price:{self.price}")
         
 class Movie:
     def __init__(self, title, price, room):
@@ -85,6 +101,11 @@ class Room:
 class Theater:
     def __init__(self):
         self.__rooms = {"room"+str(i): Room(i) for i in range(1,11)}
+
+    def find_room(self, roomnumber):
+        for i in self.rooms:
+            if "room"+str(roomnumber) == i:
+                return self.rooms[i]
 
     @property
     def rooms(self):
