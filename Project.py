@@ -50,6 +50,9 @@ class Popcorn(Food):
         self.__name = "popcorn"
         self.__price = 6
 
+    def __repr__(self):
+        return self.__name
+    
     @property
     def name(self):
         return self.__name
@@ -63,6 +66,9 @@ class Hotdog(Food):
         self.__name = "hotdog"
         self.__price = 8
 
+    def __repr__(self):
+        return self.__name
+    
     @property
     def name(self):
         return self.__name
@@ -205,7 +211,8 @@ class Kiosk:
     
     def new_customer(self, name, email):
         #creates a customer with the information provided
-        name = Customer(name, email)
+        customer = Customer(name, email)
+        return customer
 
     def purchase_ticket(self, customer, movie, room, seat, payment):
         #purchases ticket
@@ -220,6 +227,9 @@ class Kiosk:
             customer.canceltik()
         except Exception as e:
             print(f"Ticket Cancellation Failed Because {e}")
+
+    def show_tickets(self, customer):
+        print (customer.ticket)
         
     def order_popcorn(self, customer, payment):
         if payment >= 6:
@@ -229,7 +239,76 @@ class Kiosk:
         if payment >= 8:
             customer.snacks += Hotdog()
 
-    
+    def main_menu(self):
+        name = input("what is your name: ")
+        if name not in A.customers:
+            customer = Customer(name, input("email: "))
+        else:
+            customer = name
+        while True:
+            print("\n Main Menu")
+            print("1. View Movies")
+            print("2. View Seats")
+            print("3. Buy Ticket")
+            print("4. Cancel Ticket")
+            print("5. Buy Food")
+            print("6. Show Ticket")
+            print("7. Exit")
+            choice = input("Enter choice: ")
+            
+
+            if choice == "1":
+                self.get_movies()
+                print ("When buying tickets, the Movie Code is the first letter of every word capitalized")
+
+            elif choice == "2":
+                room_number = int(input("Enter room number: "))
+                #room = T.find_room(room_number)
+                self.get_seats(room_number)
+
+            elif choice == "3":
+                room_number = int(input("Room number: "))
+                seat = int(input("Seat number: "))
+                payment = int(input("Payment: "))
+                moviecode = (input("Movie Code: "))
+                movie = globals()[moviecode]
+                self.purchase_ticket(customer, movie, room_number, seat, payment)
+
+            elif choice == "4":
+                self.cancel_ticket(customer)
+
+            elif choice == "5":
+                print("1. Popcorn: $6")
+                print("2. Hodog: $8")
+                fchoice = input("Enter Choice: ")
+
+                if fchoice == "1":
+                    payment = int(input("payment: "))
+                    if payment >= 6:
+                        customer.snacks.append(Popcorn())
+                        print (f"Purchase complete, these are your current snacks: {customer.snacks}")
+                    else:
+                        print ("not sufficient funds")
+
+                elif fchoice == "2":
+                    payment = int(input("payment: "))
+                    if payment >= 8:
+                        customer.snacks.append(Hotdog())
+                        print (f"Purchase complete, these are your current snacks: {customer.snacks}")
+                    else:
+                        print ("not sufficient funds")
+            
+                else:
+                    print("invalid choice, returning to menu")
+                
+            elif choice == "6": 
+                self.show_tickets(customer) 
+            elif choice == "7":
+                print("👋 Thanks for visiting!")
+                break
+
+            else:
+                print("Invalid choice.")
 
         
 
@@ -242,10 +321,8 @@ K = Kiosk()
 SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
-IS = Movie("Interstellar", 15, 4)
-K.new_customer("John", "John@gmail.com")
-K.cancel_ticket("John")
-print (A.customers)
+I = Movie("Interstellar", 15, 4)
+K.main_menu()
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
 # Tim = Employee("Tim", "Tim@gmail.com", "Manager")
