@@ -21,6 +21,24 @@ class Customer(Person):
         super().__init__(name, email)
         A.customers[name] = email
 
+    def buytik(self, movie, room, seat, payment):
+        #checks if the payment is sufficient and then creates a ticket based on the information provided and reserves the seat by changing its taken value to True
+        if movie.price > payment:
+            print ("Not sufficient funds")
+            exit(1)
+        if T.find_room(room).findseat(seat).taken == True:
+            print ("Seat is already reserved")
+            exit(1)
+        else:
+            self.ticket = Ticket(movie, room, seat, movie.price)
+        T.find_room(room).findseat(seat).buy()
+
+    def canceltik(self):
+        #deletes the ticket from the users attributes and returns the seats taken value to False
+        T.find_room(self.ticket.room).findseat(self.ticket.seat).cancel()
+        del self.ticket 
+
+
 class Food(ABC):
     def __init__(self, name, price):
         self.__name = name
@@ -49,23 +67,6 @@ class Hotdog(Food):
     @property
     def price(self):
         return self.__price
-
-    def buytik(self, movie, room, seat, payment):
-        #checks if the payment is sufficient and then creates a ticket based on the information provided and reserves the seat by changing its taken value to True
-        if movie.price > payment:
-            print ("Not sufficient funds")
-            exit(1)
-        if T.find_room(room).findseat(seat).taken == True:
-            print ("Seat is already reserved")
-            exit(1)
-        else:
-            self.ticket = Ticket(movie, room, seat, movie.price)
-        T.find_room(room).findseat(seat).buy()
-
-    def canceltik(self):
-        #deletes the ticket from the users attributes and returns the seats taken value to False
-        T.find_room(self.ticket.room).findseat(self.ticket.seat).cancel()
-        del self.ticket
 
 class AllPeople:
     def __init__(self):
@@ -200,7 +201,10 @@ class Kiosk:
             print(T.find_room(room).seats[i])
     
     def new_customer(self, name, email):
+        #creates a customer with the information provided
         name = Customer(name, email)
+
+    def purchase_ticket(self, customer, movie, )
 
 
         
@@ -211,7 +215,7 @@ SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
 IS = Movie("Interstellar", 15, 4)
-K.new_customer("John","John@com")
+K
 print (A.customers)
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
