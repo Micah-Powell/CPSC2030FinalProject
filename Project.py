@@ -20,6 +20,7 @@ class Customer(Person):
     def __init__(self, name, email):
         super().__init__(name, email)
         A.customers[name] = email
+        self.snacks = []
 
     def buytik(self, movie, room, seat, payment):
         #checks if the payment is sufficient and then creates a ticket based on the information provided and reserves the seat by changing its taken value to True
@@ -45,8 +46,9 @@ class Food(ABC):
         self.__price = price
 
 class Popcorn(Food):
-    def __init__(self, name, price):
-        super().__init__(name, price)
+    def __init__(self):
+        self.__name = "popcorn"
+        self.__price = 6
 
     @property
     def name(self):
@@ -57,8 +59,9 @@ class Popcorn(Food):
         return self.__price
 
 class Hotdog(Food):
-    def __init__(self, name, price):
-        super().__init__(name, price)
+    def __init__(self):
+        self.__name = "hotdog"
+        self.__price = 8
 
     @property
     def name(self):
@@ -204,7 +207,32 @@ class Kiosk:
         #creates a customer with the information provided
         name = Customer(name, email)
 
-    def purchase_ticket(self, customer, movie, )
+    def purchase_ticket(self, customer, movie, room, seat, payment):
+        #purchases ticket
+        try:
+            customer.buytik(movie, room, seat, payment)
+        except Exception as e:
+            print (f"Ticket Purchase Failed Because {e}")
+        
+    def cancel_ticket(self, customer):
+        #cancels ticket
+        try:
+            customer.canceltik()
+        except Exception as e:
+            print(f"Ticket Cancellation Failed Because {e}")
+        
+    def order_popcorn(self, customer, payment):
+        if payment >= 6:
+            customer.snacks += Popcorn()
+
+    def order_hotdog(self, customer, payment):
+        if payment >= 8:
+            customer.snacks += Hotdog()
+
+    
+
+        
+
 
 
         
@@ -215,7 +243,8 @@ SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
 IS = Movie("Interstellar", 15, 4)
-K
+K.new_customer("John", "John@gmail.com")
+K.cancel_ticket("John")
 print (A.customers)
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
