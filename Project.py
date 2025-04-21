@@ -88,6 +88,7 @@ class Movie:
         self.__title = title
         self.__price = price
         self.__room = T.rooms[("room" + str(room))]
+        K.movie_list[title] = [price, room]
 
     @property
     def title(self):
@@ -100,7 +101,7 @@ class Movie:
     @property
     def room(self):
         return self.__room
-    
+   
 class Theater:
     def __init__(self):
         self.__rooms = {"room"+str(i): Room(i) for i in range(1,11)}
@@ -142,7 +143,10 @@ class Seat:
 
     def __repr__(self):
         #changes the display value of printing an object of this class to the string below
-        return (f"seat {self.number} is taken -->{self.taken}")
+        if self.taken:
+            return (f"seat {self.number} is taken")
+        else:
+            return (f"seat {self.number} is availible")
 
     def buy(self):
         #changes the taken value of the seat to True
@@ -165,11 +169,31 @@ class Seat:
         if type(taken) == bool:
             self.__taken = taken
 
+class Kiosk:
+    def __init__(self):
+        self.movie_list = {}
+
+    def get_movies(self):
+        #lists every movie that is currently showing, as well as the price
+        for movie, info in self.movie_list.items():
+            print (f"{movie} costs ${info[0]} to watch, and is in room {info[1]}")
+    
+    def get_seats(self, room):
+        for i in T.find_room(room).seats:
+            print(T.find_room(room).seats[i])
+    
+
+
 
         
 A = AllPeople()
 T = Theater()
-M1 = Movie("Star Wars", 10, 1)
+K = Kiosk()
+SW = Movie("Star Wars", 10, 1)
+HP = Movie("Harry Potter", 10, 2)
+HG = Movie("Hunger Games", 10, 3)
+IS = Movie("Interstellar", 15, 4)
+K.get_movies()
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
 # Tim = Employee("Tim", "Tim@gmail.com", "Manager")
