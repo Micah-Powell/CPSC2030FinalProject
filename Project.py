@@ -195,9 +195,12 @@ class Kiosk:
             print (f"{movie} costs ${info[0]} to watch, and is in room {info[1]}.")
     
     def get_seats(self, room):
+        #displays which seats are availible
         for i in T.find_room(room).seats:
             print(T.find_room(room).seats[i])
     
+    def new_customer(self, name, email):
+        name = Customer(name, email)
 
 
         
@@ -208,7 +211,8 @@ SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
 IS = Movie("Interstellar", 15, 4)
-
+K.new_customer("John","John@com")
+print (A.customers)
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
 # Tim = Employee("Tim", "Tim@gmail.com", "Manager")
