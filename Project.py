@@ -30,9 +30,25 @@ class Popcorn(Food):
     def __init__(self, name, price):
         super().__init__(name, price)
 
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def price(self):
+        return self.__price
+
 class Hotdog(Food):
     def __init__(self, name, price):
         super().__init__(name, price)
+
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def price(self):
+        return self.__price
 
     def buytik(self, movie, room, seat, payment):
         #checks if the payment is sufficient and then creates a ticket based on the information provided and reserves the seat by changing its taken value to True
@@ -176,13 +192,12 @@ class Kiosk:
     def get_movies(self):
         #lists every movie that is currently showing, as well as the price
         for movie, info in self.movie_list.items():
-            print (f"{movie} costs ${info[0]} to watch, and is in room {info[1]}")
+            print (f"{movie} costs ${info[0]} to watch, and is in room {info[1]}.")
     
     def get_seats(self, room):
         for i in T.find_room(room).seats:
             print(T.find_room(room).seats[i])
     
-
 
 
         
@@ -193,7 +208,7 @@ SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
 IS = Movie("Interstellar", 15, 4)
-K.get_movies()
+
 # John = Customer("John", "John@gmail.com")
 # Jerry = Customer("Jerry", "Jerry@gmail.com")
 # Tim = Employee("Tim", "Tim@gmail.com", "Manager")
