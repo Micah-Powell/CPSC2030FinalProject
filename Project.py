@@ -304,7 +304,7 @@ class Kiosk:
             elif choice == "6": 
                 self.show_tickets(customer) 
             elif choice == "7":
-                print("👋 Thanks for visiting!")
+                print("Thanks for visiting!")
                 break
 
             else:
@@ -322,17 +322,5 @@ SW = Movie("Star Wars", 10, 1)
 HP = Movie("Harry Potter", 10, 2)
 HG = Movie("Hunger Games", 10, 3)
 I = Movie("Interstellar", 15, 4)
+
 K.main_menu()
-# John = Customer("John", "John@gmail.com")
-# Jerry = Customer("Jerry", "Jerry@gmail.com")
-# Tim = Employee("Tim", "Tim@gmail.com", "Manager")
-# print (A.customers)
-# print (A.employees)
-# John.buytik(M1, 1, 1, 10)
-# print (T.rooms["room1"].seats)
-# for i in T.rooms["room1"].seats.values():
-#     print (i.taken)
-# print (John.ticket)
-# John.canceltik()
-# print (T.rooms["room1"].seats)
-# print (John.__dict__)
