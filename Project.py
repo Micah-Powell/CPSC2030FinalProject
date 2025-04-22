@@ -39,7 +39,6 @@ class Customer(Person):
         T.find_room(self.ticket.room).findseat(self.ticket.seat).cancel()
         del self.ticket 
 
-
 class Food(ABC):
     def __init__(self, name, price):
         self.__name = name
@@ -159,8 +158,7 @@ class Room:
 
     @property
     def seats(self):
-        return self.__seats
-    
+        return self.__seats    
 
 class Seat:
     def __init__(self, number):
@@ -310,11 +308,8 @@ class Kiosk:
             else:
                 print("Invalid choice.")
 
-        
 
 
-
-        
 A = AllPeople()
 T = Theater()
 K = Kiosk()
