@@ -1,0 +1,102 @@
+@startuml
+abstract class Person {
+    +name: String
+    +email: String
+}
+
+class Employee extends Person {
+    +position: String
+    +name: String
+    +email: String
+}
+
+class Customer extends Person {
+    +name: String
+    +email: String
+    +buytik(): Ticket
+    +canceltik(): void
+}
+
+abstract class Food {
+    -name: String
+    -price: Int
+}
+
+class Popcorn extends Food {
+    -name: String
+    -price: Int
+}
+
+class Hotdog extends Food {
+    -name: String
+    -price: Int
+}
+
+class AllPeople {
+    +customers: Dict
+    +employees: Dict
+}
+
+class Ticket {
+    -movie: String
+    -room: Int
+    -seat: Int
+    -price: Int
+    +__repr__(): String
+}
+
+class Movie {
+    -title: Sting
+    -price: Int
+    -room: Room
+}
+
+class Theater {
+    -rooms: dict
+    +find_room(): Room
+}
+
+class Room {
+    -location: Int
+    -seats: Dict
+    +find_seat(): Seat
+}
+
+class Seat {
+    -number: Int
+    -taken: Bool
+    +buy(): void
+    +cancel() void
+}
+
+class Kiosk {
+    +movie_list: Dict
+    +get_movies(): void
+    +get_seats(): void
+    +new_customer(): Customer
+    +purchase_ticket(): void
+    +cancel_ticket(): void
+    +show_tickets(): void
+    +order_popcorn(): void
+    +order_hotdog(): void
+    +main_menu(): void
+}
+
+Room *-- Theater
+Seat *-- Room
+Ticket *-- Customer
+Customer o-- AllPeople
+Employee o-- AllPeople
+Room o-- Movie
+Hotdog o-- Customer
+Popcorn o-- Customer
+Movie <-- Ticket
+Room <-- Ticket
+Seat <-- Ticket
+Hotdog <-- Kiosk
+Popcorn <-- Kiosk
+Customer <-- Kiosk
+Kiosk <-- Customer
+Movie o-- Kiosk
+Ticket <-- Kiosk
+@enduml
